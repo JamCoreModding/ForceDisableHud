@@ -16,7 +16,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io/github/jamalam360/force/disable/hud/ForceDisableHudInit"
+      "io.github.jamalam360.force.disable.hud.ForceDisableHudInit"
+    ],
+    "client": [
+      "io.github.jamalam360.force.disable.hud.ForceDisableHudClient"
     ]
   },
   "mixins": [
@@ -24,8 +27,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.12.5",
-    "fabric": "*",
-    "jamlib": ">=0.1.0"
+    "fabric": "*"
   },
   "custom": {
     "notify_gradle_properties_url": "https://raw.githubusercontent.com/JamCoreModding/ForceDisableHud/main/gradle.properties",

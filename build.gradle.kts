@@ -41,10 +41,5 @@ dependencies {
 
     modImplementation(libs.fabric.loader)
     modImplementation(libs.fabric.api)
-
-    modImplementation(libs.required.jamlib)
-
-    modApi(libs.optional.mod.menu)
-
     modLocalRuntime(libs.runtime.lazy.dfu)
 }

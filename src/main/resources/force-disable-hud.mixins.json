@@ -3,7 +3,10 @@
   "package": "io.github.jamalam360.force.disable.hud.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [],
-  "client": [],
+  "client": [
+    "KeyboardMixin",
+    "MinecraftClientMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1
