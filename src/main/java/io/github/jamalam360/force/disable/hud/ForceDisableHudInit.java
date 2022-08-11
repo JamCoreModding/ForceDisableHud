@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-package io.github.jamalam360.templatemod;
+package io.github.jamalam360.force-disable-hud;
 
 import io.github.jamalam360.jamlib.log.JamLibLogger;
 import net.fabricmc.api.ModInitializer;
 
-public class TemplateModInit implements ModInitializer {
-    public static final String MOD_ID = "templatemod";
-    public static final String MOD_NAME = "Template Mod";
+public class ForceDisableHudInit implements ModInitializer {
+    public static final String MOD_ID = "force-disable-hud";
+    public static final String MOD_NAME = "Force Disable HUD";
     public static final JamLibLogger LOGGER = JamLibLogger.getLogger(MOD_NAME);
 
     @Override
