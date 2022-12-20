@@ -24,67 +24,68 @@
 
 package io.github.jamalam360.force.disable.hud;
 
+import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.server.command.CommandManager.literal;
+
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
-
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import net.minecraft.text.Text;
 
 public class ForceDisableHudInit implements ModInitializer {
+
     @Override
     public void onInitialize() {
-        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> dispatcher.register(
-                literal("forcedisablehud")
-                        .requires((s) -> s.hasPermissionLevel(2))
-                        .then(
-                                literal("enablehud")
-                                        .then(
-                                                argument("targets", EntityArgumentType.players())
-                                                        .executes((context) -> {
-                                                            int i = 0;
-                                                            for (ServerPlayerEntity player : EntityArgumentType.getPlayers(context, "targets")) {
-                                                                PacketByteBuf buf = PacketByteBufs.create();
-                                                                buf.writeBoolean(true);
-                                                                ServerPlayNetworking.send(player, NetworkChannels.DISABLED_HUD, buf);
-                                                                i++;
-                                                            }
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(
+              literal("forcedisablehud")
+                    .requires((s) -> s.hasPermissionLevel(2))
+                    .then(
+                          literal("enablehud")
+                                .then(
+                                      argument("targets", EntityArgumentType.players())
+                                            .executes((context) -> {
+                                                int i = 0;
+                                                for (ServerPlayerEntity player : EntityArgumentType.getPlayers(context, "targets")) {
+                                                    PacketByteBuf buf = PacketByteBufs.create();
+                                                    buf.writeBoolean(true);
+                                                    ServerPlayNetworking.send(player, NetworkChannels.DISABLED_HUD, buf);
+                                                    i++;
+                                                }
 
-                                                            context.getSource().sendFeedback(
-                                                                    new LiteralText("Enabled HUD for " + i + " players."),
-                                                                    false
-                                                            );
+                                                context.getSource().sendFeedback(
+                                                      Text.literal("Enabled HUD for " + i + " players."),
+                                                      false
+                                                );
 
-                                                            return 0;
-                                                        })
-                                        )
-                        ).then(
-                                literal("disablehud")
-                                        .then(
-                                                argument("targets", EntityArgumentType.players())
-                                                        .executes((context) -> {
-                                                            int i = 0;
-                                                            for (ServerPlayerEntity player : EntityArgumentType.getPlayers(context, "targets")) {
-                                                                PacketByteBuf buf = PacketByteBufs.create();
-                                                                buf.writeBoolean(false);
-                                                                ServerPlayNetworking.send(player, NetworkChannels.DISABLED_HUD, buf);
-                                                                i++;
-                                                            }
+                                                return 0;
+                                            })
+                                )
+                    ).then(
+                          literal("disablehud")
+                                .then(
+                                      argument("targets", EntityArgumentType.players())
+                                            .executes((context) -> {
+                                                int i = 0;
+                                                for (ServerPlayerEntity player : EntityArgumentType.getPlayers(context, "targets")) {
+                                                    PacketByteBuf buf = PacketByteBufs.create();
+                                                    buf.writeBoolean(false);
+                                                    ServerPlayNetworking.send(player, NetworkChannels.DISABLED_HUD, buf);
+                                                    i++;
+                                                }
 
-                                                            context.getSource().sendFeedback(
-                                                                    new LiteralText("Disabled HUD for " + i + " players."),
-                                                                    false
-                                                            );
+                                                context.getSource().sendFeedback(
+                                                      Text.literal("Disabled HUD for " + i + " players."),
+                                                      false
+                                                );
 
-                                                            return 0;
-                                                        })
-                                        )
-                        )
+                                                return 0;
+                                            })
+                                )
+                    )
         )));
     }
 }
